@@ -15,7 +15,7 @@ def parse_bounds(bounds):
     try:
         bounds = map(float, bounds.split(','))
         if not len(bounds) == 4:
-            raise ValueError("Invalid Request")
+            abort(400)
     except ValueError:
         abort(400)
     return bounds
