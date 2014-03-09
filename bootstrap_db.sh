@@ -15,13 +15,9 @@ psql sf_bike_racks << EOF
     status CHAR(20)
   ); 
    
-  CREATE INDEX parking_spots_latitude_idx
-    ON parking_spots
-    USING GIST (latitude); 
+  CREATE INDEX parking_spots_latitude_idx ON parking_spots(latitude);
 
-  CREATE INDEX parking_spots_longitude_idx
-    ON parking_spots
-    USING GIST (latitude); 
+  CREATE INDEX parking_spots_longitude_idx ON parking_spots(longitude);
 EOF
 
 psql sf_bike_racks << EOF
