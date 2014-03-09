@@ -31,31 +31,37 @@ Possible Future Work
 
 - Improve deduping process and group racks with the same coordinates.
 
+- Expand API to allow for more diverse queries.
+
+- Expand Backend testing. 
+
+
+
 
 Data
 ====
 
--Source: https://data.sfgov.org/Transportation/Bicycle-Parking-Public-/w969-5mn4
+- Source: https://data.sfgov.org/Transportation/Bicycle-Parking-Public-/w969-5mn4
 
--Clean Up: Remove invalid characters
+- Clean Up: Remove invalid characters
 
--Dedup: I remove any entry that had duplicate coordinates of another entry.
+- Dedup: I remove any entry that had duplicate coordinates of another entry.
 
 
 Stack
 =====
 
--Flask
+- Flask
 
--Postgresql
+- Postgresql
 
--Mustache.js
+- Mustache.js
 
--Jquery
+- Jquery
 
--Google Maps API
+- Google Maps API
 
--Hosted on Digital Ocean
+- Hosted on Digital Ocean
 
 
 API
