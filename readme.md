@@ -10,6 +10,24 @@ Features
 
 -Search by address or coordinates
 
+-API to look up spots by ID or coordinates
+
+
+Possible Future Work
+=====================
+
+- Make the UI more mobile friendly
+	
+	- Remove the InfoWindow, and use a fixed div to show the summary information
+	- Remove the Address bar if the device supports geolocation
+		
+- Give the user notifications (instead of console.log)
+
+- On a desktop give a list of all parking spaces in a side bar.
+
+- Sort /spot/bounds so we can automatically add directions to the closest parking spot.  This would require using postgis or someother method for calcualating distances between points.
+
+- Add runtime/front ends test.
 
 Stack
 =====
@@ -27,10 +45,10 @@ Stack
 -Hosted on Digital Ocean
 
 
-API:
+API
 ===
 
-Find By Id:
+Find By Id ([e.g.](http://162.243.251.147/spots/1)):
 -----------
     URL: /spots/<spot_id>
     METHOD: GET
@@ -48,8 +66,9 @@ Find By Id:
         latitude: <latitude>,
         longitude: <longitude>
     }
+  
 
-Find In Bounds:
+Find In Bounds ([e.g.](http://162.243.251.147/spots/bounds?bounds=37.773713%2C-122.422849%2C37.776146%2C-122.415982)):
 -----------
     URL: /spots/bounds
     PARAMATERS:
@@ -64,6 +83,7 @@ Find In Bounds:
         latitude: <latitude>,
         longitude: <longitude>
     }]}
+
 
 License:
 -------
