@@ -1,74 +1,45 @@
-from flask import Flask,request, g, jsonify
-import psycopg2
-import psycopg2.extras
+from flask import Flask,request, g, jsonify, abort
+from models import ParkingSpot, close_db
 
 app = Flask(__name__)
 app.config.update(dict(
-    DEBUG=True,
+    DEBUG = True,
 ))
 
-def get_db():
-    if not hasattr(g, 'postgres_db'):
-        g.postgres_db = connect_db()
-    return g.postgres_db.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-def connect_db():
-    return  psycopg2.connect("dbname=sf_bike_racks")
 
 @app.teardown_appcontext
-def close_db(error):
-    if hasattr(g, 'postgres_db'):
-        g.postgres_db.close()
+def clean_up(error):
+    close_db()
 
-def get_spots_in_bounds(bounds):
-    db = get_db()
-    db.execute('''
-        SELECT
-            id,
-            latitude::TEXT,
-            longitude::TEXT
-        FROM
-            parking_spots
-        WHERE
-            status = 'COMPLETE'
-            and spaces > 0
-            and latitude > %s
-            and longitude > %s
-            and latitude < %s
-            and longitude <%s
-    ''', bounds)
-
-    return map(dict, db.fetchall())
-
-def get_spot_info(spot_id):
-    db = get_db()
-    db.execute('''
-        SELECT
-            id,
-            address,
-            COALESCE(location, address) AS location,
-            placement,
-            racks,
-            status,
-            spaces,
-            latitude::TEXT,
-            longitude::TEXT
-        FROM
-            parking_spots
-        WHERE
-            id = %s
-    ''', (spot_id,))
-    return dict(db.fetchone())
+def parse_bounds(bounds):
+    try:
+        bounds = map(float, bounds.split(','))
+        if not len(bounds) == 4:
+            raise ValueError("Invalid Request")
+    except ValueError:
+        abort(400)
+    return bounds
 
 @app.route('/spots/bounds')
 def spots_in_bounds():
-    bounds = request.args['bounds'].split(',')
-    bounds = map(float, bounds)
-    return jsonify(result = get_spots_in_bounds(bounds))
+    bounds = parse_bounds(request.args['bounds'])
+    parking_spots = ParkingSpot.in_bounds(bounds)
+    return jsonify(result = parking_spots)
+
+def parse_id(spot_id):
+    try:
+        return int(spot_id)
+    except ValueError:
+        abort(400)
 
 @app.route('/spots/<spot_id>')
 def spot_info(spot_id):
-    return jsonify(get_spot_info(spot_id))
+    spot_id = parse_id(spot_id)
+    parking_spot = ParkingSpot.find(spot_id)
+    if parking_spot is None:
+        abort(404)
+    return jsonify(parking_spot)
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8080)
