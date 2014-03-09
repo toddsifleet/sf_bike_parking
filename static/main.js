@@ -104,7 +104,7 @@ $(function() {
   }
 
   var onUserInput = function() {
-    closeInfoWindow();
+    clearMap();
     var data = { 'address': $('#address').val() };
     geocoder.geocode(data, function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
@@ -134,7 +134,7 @@ $(function() {
   }
 
   var initDefaults = function() {
-    if (!navigator.geolocation) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(onPositionCoords);
     }
     else {
