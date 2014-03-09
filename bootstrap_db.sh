@@ -3,9 +3,6 @@ dropdb sf_bike_racks
 createdb sf_bike_racks -E UNICODE
 
 psql sf_bike_racks << EOF
-  CREATE EXTENSION postgis;
-  CREATE EXTENSION fuzzystrmatch;
-
   CREATE TABLE parking_spots ( 
     id SERIAL PRIMARY KEY,
     address VARCHAR(128),
