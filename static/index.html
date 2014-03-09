@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Find Bike Parking in SF</title>
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/static/main.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+
+  </head>
+  <body>
+    <div id="popup-template">
+      <div class="popup">
+        <h1>{{spot.location}}</h1>
+        <ul>
+          <li>Address: {{spot.address}}</li>
+          <li>Spaces: {{spot.spaces}}</li>
+          <li>Placement: {{spot.placement}}</li>
+        </ul>
+        <strong>
+          <a href="https://www.google.com/maps/dir/{{current.d}},{{current.e}}/{{spot.latitude}},{{spot.longitude}}">Google Maps</a>
+        </strong>
+      </div>
+    </div>
+    <div id="controls">
+      <input id="address" type="textbox" value="Loading....">
+    </div>
+    <div id="map-canvas"></div>
+  </body>
+</html>
