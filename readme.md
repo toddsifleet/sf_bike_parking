@@ -29,6 +29,19 @@ Possible Future Work
 
 - Add runtime/front ends test.
 
+- Improve deduping process and group racks with the same coordinates.
+
+
+Data
+====
+
+-Source: https://data.sfgov.org/Transportation/Bicycle-Parking-Public-/w969-5mn4
+
+-Clean Up: Remove invalid characters
+
+-Dedup: I remove any entry that had duplicate coordinates of another entry.
+
+
 Stack
 =====
 
